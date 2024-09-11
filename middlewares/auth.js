@@ -1,9 +1,8 @@
 const jwt = require("jsonwebtoken");
 const { ErrorHandler } = require("../utils/ErrorHandler");
 const { adminSecretKey } = require("../constants/data");
-const path = require("path");
 const { User } = require("../models/user");
-require("dotenv").config({ path: path.resolve("/server", "../.env") });
+// require("dotenv").config({ path: path.resolve("/server", "../.env") });
 
 const isAuthenticated = (req, res, next) => {
   try {
@@ -35,7 +34,7 @@ const adminAuth = (req, res, next) => {
   }
 };
 
-const socketAuthenticater = async ({ err, socket, next }) => {
+const socketAuthenticater = async (err, socket, next) => {
   try {
     if (err) return next(err);
 
