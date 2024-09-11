@@ -49,6 +49,7 @@ const io = new Server(server, {
 
 // assigning io to use across app
 app.set("io", io);
+app.options('*', cors(corsOptions));
 
 // Middlewares
 app.use(express.json());
