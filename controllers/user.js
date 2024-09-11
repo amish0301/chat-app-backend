@@ -54,6 +54,8 @@ const login = TryCatch(async (req, res, next) => {
 
 // LOG-OUT
 const logout = async (req, res) => {
+  await User.findByIdAndDelete(req.userId);
+
   return res
     .status(200)
     .cookie("uid", "", { ...cookieOptions, maxAge: 0 })
