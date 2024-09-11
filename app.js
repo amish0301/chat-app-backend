@@ -33,7 +33,6 @@ const port = process.env.SERVER_PORT || 8000;
 const envMode = process.env.NODE_ENV.trim() || "PRODUCTION";
 
 connectMongoDB(mongouri);
-app.use(cors(corsOptions));
 
 // Cloudinary Config
 cloudinary.config({
@@ -54,6 +53,7 @@ app.set("io", io);
 // Middlewares
 app.use(express.json());
 app.use(cookieParser());
+app.use(cors(corsOptions));
 app.get('/', (req, res) => {
   res.send('Hello from Server!');
 })
