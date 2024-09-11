@@ -43,13 +43,10 @@ cloudinary.config({
 
 const app = express();
 const server = http.createServer(app);
-const io = new Server(server, {
-  cors: corsOptions,
-});
+const io = new Server(server, { cors: corsOptions });
 
 // assigning io to use across app
 app.set("io", io);
-app.options('*', cors(corsOptions));
 
 // Middlewares
 app.use(express.json());
