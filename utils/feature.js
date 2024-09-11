@@ -1,7 +1,6 @@
 const { getBase64, getSockets } = require("../lib/helper");
 const cloudinary = require("cloudinary").v2;
 const uuid_v4 = require("uuid").v4;
-4;
 
 const emitEvent = (req, event, users, data) => {
   const userSockets = getSockets(users);
