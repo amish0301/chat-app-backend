@@ -19,13 +19,13 @@ const { getSockets } = require("./lib/helper");
 const Message = require("./models/message");
 const cloudinary = require("cloudinary").v2;
 const { socketAuthenticater } = require("./middlewares/auth");
-
-require("dotenv").config();
+const { corsOptions } = require("./constants/config");
 
 const userRoutes = require("./routes/user");
 const chatRoutes = require("./routes/chat");
 const adminRoutes = require("./routes/admin");
-const { corsOptions } = require("./constants/config");
+
+require("dotenv").config({ path: "./.env" });
 
 // Initialisations
 const mongouri = process.env.MONGODB_URL;
