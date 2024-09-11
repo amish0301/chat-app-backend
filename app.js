@@ -161,7 +161,7 @@ app.use(errorHandler); // Middleware for errors
 
 // default Home Route
 app.get("/", (req, res) => {
-  res.send("Home Page");
+  res.send("Welcome!!");
 });
 
 server.listen(port, () =>
