@@ -68,7 +68,7 @@ io.use((socket, next) => {
   cookieParser()(
     socket.request,
     socket.request.res,
-    async (err) => await socketAuthenticater({ err: err || null, socket, next })
+    async (err) => await socketAuthenticater(err,socket,next)
   );
 });
 
