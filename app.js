@@ -29,7 +29,7 @@ const { corsOptions } = require("./constants/config");
 
 // Initialisations
 const mongouri = process.env.MONGODB_URL;
-const port = process.env.SERVER_PORT || 8080;
+const port = process.env.SERVER_PORT || 8000;
 const envMode = process.env.NODE_ENV.trim() || "PRODUCTION";
 
 connectMongoDB(mongouri);
