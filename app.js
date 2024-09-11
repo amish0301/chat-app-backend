@@ -20,7 +20,7 @@ const Message = require("./models/message");
 const cloudinary = require("cloudinary").v2;
 const { socketAuthenticater } = require("./middlewares/auth");
 
-require("dotenv").config({ path: "./.env" });
+require("dotenv").config();
 
 const userRoutes = require("./routes/user");
 const chatRoutes = require("./routes/chat");

@@ -1,7 +1,9 @@
+const allowedOrigins = process.env.CLIENT_URI.split(',').map(origin => origin.trim());
+
 const corsOptions = {
-  origin: [process.env.CLIENT_URI, "http://localhost:3000", "http://localhost:5173"],
+  origin: allowedOrigins,
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE"],
 };
 
-module.exports = { corsOptions }
+module.exports = { corsOptions };
