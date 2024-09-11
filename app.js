@@ -60,15 +60,14 @@ app.set("io", io);
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors(corsOptions));
-app.use(express.static(path.join(__dirname, "build")));
+app.get('/', (req, res) => {
+  res.send('Hello from Server!');
+})
 
 // Routes
 app.use("/api/user", userRoutes);
 app.use("/api/chat", chatRoutes);
 app.use("/api/admin", adminRoutes);
-// app.get("*", (req, res) => {
-//   res.sendFile(path.join(__dirname, "build", "index.html"));
-// });
 
 // Middleware for Socket
 io.use((socket, next) => {
@@ -158,11 +157,6 @@ io.on("connection", (socket) => {
 });
 
 app.use(errorHandler); // Middleware for errors
-
-// default Home Route
-app.get("/", (req, res) => {
-  res.send("Welcome!!");
-});
 
 server.listen(port, () =>
   console.log(`Server running on ${port} in ${envMode} mode`)
