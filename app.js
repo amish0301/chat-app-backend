@@ -25,18 +25,12 @@ require("dotenv").config({ path: "./.env" });
 const userRoutes = require("./routes/user");
 const chatRoutes = require("./routes/chat");
 const adminRoutes = require("./routes/admin");
-const path = require("path");
+const { corsOptions } = require("./constants/config");
 
 // Initialisations
 const mongouri = process.env.MONGODB_URL;
 const port = process.env.SERVER_PORT || 4000;
 const envMode = process.env.NODE_ENV.trim() || "PRODUCTION";
-const clientUri = process.env.CLIENT_URI;
-const corsOptions = {
-  origin: clientUri,
-  credentials: true,
-  optionsSuccessStatus: 200,
-};
 
 connectMongoDB(mongouri);
 
