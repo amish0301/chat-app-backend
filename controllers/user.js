@@ -87,7 +87,7 @@ const searchUser = TryCatch(async (req, res, next) => {
     avatar: avatar?.url,
   }));
 
-  return res.status(200).json({ success: true, users: users });
+  return res.status(200).json({ success: true, users });
 });
 
 // SEND FRIEND REQUEST
