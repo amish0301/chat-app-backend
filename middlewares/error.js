@@ -1,5 +1,5 @@
 const errorHandler = (err, req, res, next) => {
-  err.message ||= "Internal Server Error";
+  err.message ||= "Unknown Error Occurred, Try reloading the page.";
   err.statusCode ||= 500;
 
   // Duplicate key error
