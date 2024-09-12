@@ -15,7 +15,6 @@ const {
   NEW_MESSAGE,
   MESSAGE_DELETE,
 } = require("../constants/events");
-const { attachmentsMulter } = require("../middlewares/multer");
 
 const newGroupChat = TryCatch(async (req, res, next) => {
   const { name, members } = req.body;
@@ -231,15 +230,18 @@ const sendAttachments = TryCatch(async (req, res, next) => {
     chat: chatId,
   };
 
+  const message = await Message.create(messageForDB);
+
   const messageForRealTime = {
-    ...messageForDB,
+    _id: message._id,
+    content: message.content,
+    attachments: message.attachments,
     sender: {
       _id: sender._id,
       name: sender.name,
     },
   };
 
-  const message = await Message.create(messageForDB);
 
   emitEvent(req, NEW_MESSAGE, chat.members, {
     message: messageForRealTime,

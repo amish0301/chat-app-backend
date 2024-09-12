@@ -8,7 +8,17 @@ const emitEvent = (req, event, users, data) => {
   io.to(userSockets).emit(event, data);
 };
 
-const deleteFilesFromCloudnary = async (pIds) => {};
+const deleteFilesFromCloudnary = async (pIds) => {
+  try {
+    const results = await cloudinary.api.delete_resources(pIds, {
+      resource_type: ["image", "video", "raw"],
+    });
+    console.log(results);
+    return results;
+  } catch (err) {
+    throw new Error("Error deleting files from cloudinary", err);
+  }
+};
 
 const uploadFilesToCloudinary = async (files = []) => {
   const uploadPromises = files.map((file) => {
