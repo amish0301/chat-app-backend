@@ -10,13 +10,14 @@ const emitEvent = (req, event, users, data) => {
 
 const deleteFilesFromCloudnary = async (pIds) => {
   try {
-    const results = await cloudinary.api.delete_resources(pIds, {
-      resource_type: ["image", "video", "raw"],
-    });
-    console.log(results);
-    return results;
-  } catch (err) {
-    throw new Error("Error deleting files from cloudinary", err);
+    const deletePromises = pIds.map((pId) => 
+      cloudinary.uploader.destroy(pId)
+    );
+
+    await Promise.all(deletePromises);
+    return true;
+  } catch (error) {
+    throw new Error("Error deleting files from cloudinary", error);
   }
 };
 
