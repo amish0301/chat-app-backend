@@ -30,7 +30,7 @@ require("dotenv").config({ path: "./.env" });
 // Initialisations
 const mongouri = process.env.MONGODB_URL;
 const port = process.env.SERVER_PORT || 8000;
-const envMode = process.env.NODE_ENV.trim() || "PRODUCTION";
+const envMode = process.env.NODE_ENV.trim() || "production";
 
 connectMongoDB(mongouri);
 
