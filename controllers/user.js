@@ -2,7 +2,7 @@ const { User } = require("../models/user");
 const { Chat } = require("../models/chat");
 const { Request } = require("../models/request");
 const { sendToken } = require("../utils/JWT");
-const { compare } = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const { cookieOptions } = require("../constants/cookie");
 const { ErrorHandler, TryCatch } = require("../utils/ErrorHandler");
 const { NEW_REQUEST, REFETCH_CHAT } = require("../constants/events");
@@ -24,15 +24,24 @@ const newUser = TryCatch(async (req, res, next) => {
     url: result[0].url,
   };
 
+  const isExist = await User.findOne({ username }).select("+password");
+
+  if (isExist) return res.status(400).json({ success: false, message: "User Already Exist, Please Login" });
+
+  // hash password
+  const hashedPassword = await bcrypt.hash(password, 10);
+
   const user = await User.create({
     name,
     username,
-    password,
+    password: hashedPassword,
     avatar,
     bio,
   });
 
-  sendToken(res, user, 201, "User Created Successfully");
+  await user.save();
+
+  return res.status(200).json({ success: true, message: "User Created Successfully" });
 });
 
 // LOG-IN
@@ -44,7 +53,7 @@ const login = TryCatch(async (req, res, next) => {
     return next(new ErrorHandler("Invalid Username or Password", 404));
   }
 
-  const isMatchPassword = await compare(password, user.password);
+  const isMatchPassword = await bcrypt.compare(password, user.password);
   if (!isMatchPassword) {
     return next(new ErrorHandler("Invalid Username or Password", 404));
   }
