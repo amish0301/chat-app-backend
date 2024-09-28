@@ -98,7 +98,9 @@ const addMembers = TryCatch(async (req, res, next) => {
   if (chat.creator.toString() !== req.userId.toString())
     return next(new ErrorHandler("You are not admin of this group", 403));
 
-  const allNewMembersPromise = members.map((member) => User.findById(member, "name"));
+  const allNewMembersPromise = members.map((member) =>
+    User.findById(member, "name")
+  );
 
   const allNewMembers = await Promise.all(allNewMembersPromise);
 
@@ -128,7 +130,10 @@ const addMembers = TryCatch(async (req, res, next) => {
 
   return res
     .status(200)
-    .json({ success: true, message: `Members Added in ${chat.name} Successfully` });
+    .json({
+      success: true,
+      message: `Members Added in ${chat.name} Successfully`,
+    });
 });
 
 const removeMembers = TryCatch(async (req, res, next) => {
@@ -183,15 +188,21 @@ const leaveGroup = TryCatch(async (req, res, next) => {
     (member) => member.toString() !== req.userId.toString()
   );
 
-  if (remainingMembers.length < 3) {
-    return next(new ErrorHandler("Group must have atleast 2 members", 400));
-  }
-
   // if Group admin itself want to leave group
   if (chat.creator.toString() === req.userId.toString()) {
     const randomElement = Math.floor(Math.random() * remainingMembers.length);
     const newCreator = remainingMembers[randomElement];
     chat.creator = newCreator;
+  }
+
+  if (remainingMembers.length < 3) {
+    // make this group as normal chat
+    chat.groupChat = false;
+    chat.members = remainingMembers;
+    await chat.save();
+    return res
+      .status(200)
+      .json({ success: true, message: "You left the Group Successfully" });
   }
 
   chat.members = remainingMembers;

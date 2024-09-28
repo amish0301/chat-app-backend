@@ -88,7 +88,7 @@ io.on("connection", (socket) => {
 
     try {
       const savedMessage = await Message.create(messageForDB);
-
+      // if location then find the location name and save in db
       const messageForRealtime = {
         content: savedMessage.content,
         _id: savedMessage._id,

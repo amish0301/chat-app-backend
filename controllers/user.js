@@ -26,7 +26,7 @@ const newUser = TryCatch(async (req, res, next) => {
 
   const isExist = await User.findOne({ username }).select("+password");
 
-  if (isExist) return res.status(400).json({ success: false, message: "User Already Exist, Please Login" });
+  if (isExist) return res.status(400).json({ success: false, message: "Username Already Exist!" });
 
   // hash password
   const hashedPassword = await bcrypt.hash(password, 10);
